@@ -10,13 +10,13 @@ import {
  
  export class ExhFilesTrigger implements INodeType {
     description: INodeTypeDescription = {
-        displayName: 'Extra Horizon Files Service Trigger',
+        displayName: 'Incoming File Event',
         name: 'exhFilesTrigger',
         icon: 'file:exhFiles.svg',
         group: ['trigger'],
         version: 1,
         subtitle: '={{$parameter["event"]}}',
-        description: 'Handle incoming Files',
+        description: 'Trigger actions when a File gets uploaded',
         defaults: {
             name: 'File Service Trigger',
             color: '#6ad7b9',

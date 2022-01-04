@@ -1,0 +1,21 @@
+{
+	"node": "n8n-nodes-base.exh.task",
+	"nodeVersion": "1.0",
+	"exhPaymentVersion": "1.0",
+	"categories": [
+		"Development",
+		"Extra Horizon"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.n8n.io/credentials/extraHorizon"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.extrahorizon.io/n8n/task-service"
+			}
+		]
+	}
+}

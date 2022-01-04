@@ -8,17 +8,17 @@ import {
 } from 'n8n-workflow';
  
  
- export class ExhDataTrigger implements INodeType {
+ export class ExhTaskTrigger implements INodeType {
     description: INodeTypeDescription = {
-        displayName: 'Incoming Data Event',
-        name: 'exhDataTrigger',
-        icon: 'file:exhData.svg',
+        displayName: 'Task Execution Scheduling Event',
+        name: 'exhTaskTrigger',
+        icon: 'file:exhTask.svg',
         group: ['trigger'],
         version: 1,
         subtitle: '={{$parameter["event"]}}',
-        description: 'Trigger actions when a Data record gets uploaded',
+        description: 'Handle scheduled Tasks',
         defaults: {
-            name: 'Data Service Trigger',
+            name: 'Task Execution Scheduling Event',
             color: '#6ad7b9',
         },
         inputs: [],
