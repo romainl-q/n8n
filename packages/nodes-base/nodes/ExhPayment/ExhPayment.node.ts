@@ -1,4 +1,10 @@
 import {
+    ExhService,
+    paymentExhApiRequest,
+} from './GenericFunctions';
+
+
+import {
     IExecuteFunctions,
 } from 'n8n-core';
 
@@ -29,13 +35,14 @@ export class ExhPayment implements INodeType {
         outputs: ['main'],
         credentials: [
             {
-                name: 'ExtraHorizonApi',
+                // name: 'exhOAuth1Api',
+                name: 'extraHorizonOAuth2Api',
                 required: true,
             },
         ],
         properties: [
-        //     // Node properties which the user gets displayed and
-        //     // can change on the node.
+            //     // Node properties which the user gets displayed and
+            //     // can change on the node.
             {
                 displayName: 'AuthenticationType',
                 name: 'authType',
@@ -97,9 +104,61 @@ export class ExhPayment implements INodeType {
     };
 
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-        return [[]];
+        const credentials = await this.getCredentials('ExtraHorizonOAuth2Api') as IDataObject;
+
+        // TODO IMPLEMENT EXH JS SDK
+        // const sdk = createOAuth2Client({
+        //     host: 'https://api.dev.fibricheck.com',
+        //     clientId: '',
+        // });
+
+        // await sdk.auth.authenticate({
+        //     username: credentials.email,
+        //     password: credentials.password,
+        // });
+
+        // console.log('sdk.users.health()', await sdk.users.health());
+        // console.log('sdk.users.me()', await sdk.users.me());
+
+        let responseData;
+        const returnData: IDataObject[] = [];
+        responseData = await paymentExhApiRequest.call(this, 'GET', ExhService.PAYMENT, 'orders', {}, {});
+        // if (!credentials.accessToken || !credentials.tokenSecret) {
+        // TODO This section is to be refactored into a separate function accessible through a generic service layer 
+        /*
+        ${credentials.consumerKey}
+${credentials.consumerSecret}
+${credentials.email}
+${credentials.password} */
+        //     const options: OptionsWithUri = {
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Authorization': `OAuth oauth_consumer_key="${credentials.consumerKey}",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1641223019",oauth_nonce="A4ofIqvqaX5",oauth_version="1.0",oauth_signature="LgKf7qPU8vlM7rHp2BOX6yoD08Q%3D"`,
+        //     },
+        //     method: 'PUT',
+        //     body: {
+        //         contacts: [
+        //             data,
+        //         ],
+        //     },
+        //     uri: `https://api.sendgrid.com/v3/marketing/contacts`,
+        //     json: true,
+        // };
+
+        // responseData = await this.helpers.request(options);
+        // }
+        if (Array.isArray(responseData)) {
+            returnData.push.apply(returnData, responseData as IDataObject[]);
+        } else if (responseData !== undefined) {
+            returnData.push(responseData as IDataObject);
+        }
+        return [this.helpers.returnJsonArray(returnData)];
+        // return [[]];
     }
 }
+        // cons
+    // }
+// }
 
     // async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     //     let responseData;
